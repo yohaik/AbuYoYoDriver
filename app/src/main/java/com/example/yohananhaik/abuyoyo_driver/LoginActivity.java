@@ -61,9 +61,9 @@ public class  LoginActivity extends AppCompatActivity {
 
     // Executed when Register button pressed
     public void registerNewUser(View v) {
-      //  Intent intent = new Intent(this, RegisterActivity.class);
-      //  finish();
-      //  startActivity(intent);
+        Intent intent = new Intent(this, RegisterActivity.class);
+        finish();
+        startActivity(intent);
     }
 
     // TODO: Complete the attemptLogin() method
