@@ -6,5 +6,9 @@
     <color name="white">#FFFFFF</color>
     <color name="green">#27AE60</color>
     <color name="colorText">#2f1f20</color>
+    <color name="colorButton1">#ffc16e</color>
+    <color name="colorButton2">#80cfd3</color>
+    <color name="colorButton3">#725545</color>
+    <color name="colorButton4">#000000</color>
 
 </resources>

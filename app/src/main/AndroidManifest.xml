@@ -26,7 +26,11 @@
         <activity
             android:name=".MenuActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".fastTripActivity" />
+        <activity android:name=".searchTripsActivity" />
+        <activity android:name=".tripHistoryActivity" />
+        <activity android:name=".accountActivity"></activity>
     </application>
 
 </manifest>
