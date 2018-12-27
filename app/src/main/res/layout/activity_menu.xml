@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/signup"
     android:visibility="visible"
-    tools:context=".MenuActivity">
+    tools:context=".controller.MenuActivity">
 
     <ImageView
         android:id="@+id/imageView3"

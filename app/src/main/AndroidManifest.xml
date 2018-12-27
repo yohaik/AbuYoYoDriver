@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".controller.LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +24,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MenuActivity"
+            android:name=".controller.MenuActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".fastTripActivity" />
-        <activity android:name=".searchTripsActivity" />
-        <activity android:name=".tripHistoryActivity" />
-        <activity android:name=".accountActivity"></activity>
+        <activity android:name=".controller.RegisterActivity" />
+        <activity android:name=".controller.fastTripActivity" />
+        <activity android:name=".controller.searchTripsActivity" />
+        <activity android:name=".controller.tripHistoryActivity" />
+        <activity android:name=".controller.accountActivity"></activity>
     </application>
 
 </manifest>

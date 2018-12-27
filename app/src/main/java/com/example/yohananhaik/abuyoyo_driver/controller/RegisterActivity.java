@@ -1,4 +1,4 @@
-package com.example.yohananhaik.abuyoyo_driver;
+package com.example.yohananhaik.abuyoyo_driver.controller;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.yohananhaik.abuyoyo_driver.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 

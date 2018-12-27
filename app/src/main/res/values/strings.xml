@@ -24,4 +24,8 @@
     <string name="search_trips">Search Trips</string>
     <string name="trips_history">Trips History</string>
     <string name="account">Account</string>
+    <string name="location">location</string>
+    <string name="from">FROM:</string>
+    <string name="destention">destention</string>
+    <string name="where">WHERE:</string>
 </resources>
