@@ -82,6 +82,7 @@ public class searchTripsActivity extends AppCompatActivity {
             Trip trip = trips.get(position);
             holder.locationTextView.setText(trip.getPickUpLoc());
             holder.destentionTextView.setText(trip.getDestinationLoc());
+            holder.textViewNumber.setText(Integer.toString(position));
         }
 
         @Override
@@ -94,11 +95,13 @@ public class searchTripsActivity extends AppCompatActivity {
 
             TextView locationTextView;
             TextView destentionTextView;
+            TextView textViewNumber;
 
             tripViewHolder(View itemView) {
                 super(itemView);
                 locationTextView = itemView.findViewById(R.id.locationTextView);
                 destentionTextView = itemView.findViewById(R.id.destentionTextView);
+                textViewNumber = itemView.findViewById(R.id.textViewNumber);
 
                 // itemView.setOnClickListener();
             }

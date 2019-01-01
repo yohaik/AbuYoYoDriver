@@ -62,6 +62,18 @@ public class Firebase_DBManager implements Backend {
 
                 @Override
                 public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    Trip trip = dataSnapshot.getValue(Trip.class);
+                    String id = dataSnapshot.getKey();
+                    trip.setId(id);
+
+
+                    for (int i = 0; i < tripList.size(); i++) {
+                        if (tripList.get(i).getId().equals(id)) {
+                            tripList.remove(i);
+                            break;
+                        }
+                    }
+                    notifyDataChange.OnDataChanged(tripList);
 
                 }
 
