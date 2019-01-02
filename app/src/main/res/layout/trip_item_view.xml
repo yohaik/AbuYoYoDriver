@@ -86,5 +86,30 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
+        <TextView
+            android:id="@+id/textViewDes"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="31dp"
+            android:layout_marginTop="34dp"
+            android:text="@string/destention_from_string_app_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textViewNumDes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        <TextView
+            android:id="@+id/textViewNumDes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="29dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/the_num"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewDes"
+            app:layout_constraintTop_toBottomOf="@+id/destentionTextView" />
+
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

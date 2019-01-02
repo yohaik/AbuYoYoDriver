@@ -59,7 +59,7 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewNumDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -88,7 +88,7 @@
             app:layout_constraintBottom_toTopOf="@+id/passwordTextField"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/textViewNumDes">
 
             <AutoCompleteTextView
                 android:id="@+id/email"
