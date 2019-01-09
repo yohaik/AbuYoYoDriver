@@ -26,9 +26,9 @@
     <string name="account">Account</string>
     <string name="location">location</string>
     <string name="from">FROM:</string>
-    <string name="destention">destention</string>
+    <string name="Destination">destention</string>
     <string name="where">WHERE:</string>
     <string name="num">num</string>
-    <string name="destention_from_string_app_name">destention from @string/app_name</string>
+    <string name="destination_from_string_app_name">Destination from @string/app_name</string>
     <string name="the_num">the Num</string>
 </resources>

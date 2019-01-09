@@ -1,7 +1,6 @@
 package com.example.yohananhaik.abuyoyo_driver.controller;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -14,13 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,25 +32,23 @@ public class searchTripsActivity extends AppCompatActivity {
 
     private RecyclerView tripsRecycleView;
     private List<Trip> trips;
-    private Location driverLocation;
-    Address passengerLocation;
+   // private Location driverLocation;
+   // private Location passengerLocation;
     // Acquire a reference to the system Location Manager
     LocationManager locationManager;
     //Define a listener that responds to location updates
     LocationListener locationListener;
+    private String dLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_trips);
 
-
-        //define the recycer view
+        //define the recycler view
         tripsRecycleView = findViewById(R.id.tripsRecyclerView);
         tripsRecycleView.setHasFixedSize(true);
         tripsRecycleView.setLayoutManager(new LinearLayoutManager(this));
-
-        //add
 
         Backend dataBase = BackendFactory.getBackend();
 
@@ -71,7 +64,7 @@ public class searchTripsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Exception exception) {
-                Toast.makeText(getBaseContext(), "error to get students list\n" + exception.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "error to get  list\n" + exception.toString(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -79,7 +72,8 @@ public class searchTripsActivity extends AppCompatActivity {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                driverLocation = location;
+          //      driverLocation = location;
+                dLocation = getPlace(location);
             }
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
@@ -115,11 +109,11 @@ public class searchTripsActivity extends AppCompatActivity {
         public void onBindViewHolder(tripViewHolder holder, int position) {
 
             Trip trip = trips.get(position);
-            holder.locationTextView.setText(trip.getPickUpLoc());
-            holder.destentionTextView.setText(trip.getDestinationLoc());
-            holder.textViewNumber.setText(Integer.toString(position));
-            passengerLocation = findLocationByName(trip.getPickUpLoc());
-            holder.textViewNumDes.setText(findDistance(driverLocation,passengerLocation));
+            holder.passengerLocationTextView.setText(trip.getPickUpLoc());
+            holder.tripDestinationTextView.setText(trip.getDestinationLoc());
+            holder.textViewTripLength.setText(
+                    findDistance(getTripDestinationAsLocation(trip.getPickUpLoc())
+                            ,getTripDestinationAsLocation(trip.getDestinationLoc())));
         }
 
         @Override
@@ -130,24 +124,22 @@ public class searchTripsActivity extends AppCompatActivity {
 
         class tripViewHolder extends RecyclerView.ViewHolder {
 
-            TextView locationTextView;
-            TextView destentionTextView;
-            TextView textViewNumber;
-            TextView textViewNumDes;
+            TextView passengerLocationTextView;
+            TextView tripDestinationTextView;
+            TextView textViewTripLength;
 
             tripViewHolder(View itemView) {
                 super(itemView);
-                locationTextView = itemView.findViewById(R.id.locationTextView);
-                destentionTextView = itemView.findViewById(R.id.destentionTextView);
-                textViewNumber = itemView.findViewById(R.id.textViewNumber);
-                textViewNumDes = itemView.findViewById(R.id.textViewNumDes);
+                passengerLocationTextView = itemView.findViewById(R.id.passengerLocationTextView);
+                tripDestinationTextView = itemView.findViewById(R.id.destinationTextView);
+                textViewTripLength = itemView.findViewById(R.id.textViewNumDes);
 
                 // itemView.setOnClickListener();
             }
         }
     }
 
-    //metod that fine location by string
+  /*  //metod that fine location by string
     public Address findLocationByName(String addresStr){
         if(addresStr == null){
             return null;
@@ -163,10 +155,10 @@ public class searchTripsActivity extends AppCompatActivity {
             return address.get(0);
         }
         return null;
-    }
+    }*/
 
     //find distance between address
-    public String findDistance(Location locationA, Address locationB){
+    public String findDistance(Location locationA, Location locationB){
         if(locationA == null || locationB == null){
             return "0";
         }
@@ -174,14 +166,11 @@ public class searchTripsActivity extends AppCompatActivity {
         Location.distanceBetween(locationA.getLatitude(), locationA.getLongitude(),
                 locationB.getLatitude(),locationB.getLongitude(), results);
 
-       // Location loc = new Location("location");
-       // loc.setLatitude(locationB.getLatitude());
-       // loc.setLongitude(locationB.getLongitude());
-
-       // float distance = locationA.distanceTo(loc);
-
-        if(results[0]>1000)
-          return ""+results[0]/1000+" km";
+        if(results[0]>1000) {
+            float result = results[0] / 1000;
+            String res = String.format("%.2f", result);
+            return res;
+        }
         else
         {
             return ""+results[0]  +" meter";
@@ -201,7 +190,50 @@ public class searchTripsActivity extends AppCompatActivity {
         }
 
     }
-    //push al masho mefager
+
+    public String getPlace(Location location) {
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            if (addresses.size() > 0) {
+                String address = addresses.get(0).getAddressLine(0);
+                return address;
+            }
+
+            return "no place: \n ("+location.getLongitude()+" , "+location.getLatitude()+")";
+        }
+        catch(
+                IOException e)
+
+        {
+            e.printStackTrace();
+        }
+        return "IOException ...";
+    }
+
+    private Location getTripDestinationAsLocation(String addressToConvert)
+    {
+        Location myLocation = new Location(addressToConvert);
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            List<Address> geoResults = geocoder.getFromLocationName(addressToConvert, 1);
+            while (geoResults.size()==0) {
+                geoResults = geocoder.getFromLocationName(addressToConvert, 1);
+            }
+            if (geoResults.size()>0) {
+                Address addr = geoResults.get(0);
+                myLocation.setLatitude(addr.getLatitude());
+                myLocation.setLongitude(addr.getLongitude());
+            }
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+        return myLocation;
+    }
+
 
 
 }

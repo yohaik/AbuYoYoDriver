@@ -42,6 +42,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(v == buttonSearchTrips){
             startActivity(new Intent(this,searchTripsActivity.class));
+            // TODO: putExtra of driver location
         }
         if(v == buttonTripsHistory){
             startActivity(new Intent(this,tripHistoryActivity.class));
