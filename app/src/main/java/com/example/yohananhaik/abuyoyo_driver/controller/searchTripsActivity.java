@@ -61,6 +61,7 @@ public class searchTripsActivity extends AppCompatActivity {
                 } else
                     tripsRecycleView.getAdapter().notifyDataSetChanged();
             }
+            //what
 
             @Override
             public void onFailure(Exception exception) {
