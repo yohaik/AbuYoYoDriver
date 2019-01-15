@@ -1,12 +1,13 @@
 package com.example.yohananhaik.abuyoyo_driver.model.backend;
 
+import com.example.yohananhaik.abuyoyo_driver.model.entities.Driver;
 import com.example.yohananhaik.abuyoyo_driver.model.entities.Trip;
 
 import java.util.List;
 
 public interface Backend{
-    public interface Action<T> {
-    void onSuccess(T obj);
+    public interface Action{
+    void onSuccess();
 
     void onFailure(Exception exception);
 
@@ -22,6 +23,7 @@ public interface Backend{
     void notifyToTripList(final NotifyDataChange<List<Trip>> notifyDataChange);
     void stopNotifyToStudentList();
 
+    void isValidDriverAuthentication(String emailForCheck, String passwordForCheck, Action action);
 
-  //  void addRequest(Trip trip, final Action<Void> action);
+    void addDriver(Driver driver, final Action action);
 }

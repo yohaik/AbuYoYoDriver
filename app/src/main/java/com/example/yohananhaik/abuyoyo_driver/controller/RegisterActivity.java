@@ -12,10 +12,15 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yohananhaik.abuyoyo_driver.R;
+import com.example.yohananhaik.abuyoyo_driver.model.backend.Backend;
+import com.example.yohananhaik.abuyoyo_driver.model.backend.BackendFactory;
+import com.example.yohananhaik.abuyoyo_driver.model.entities.Driver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,24 +38,29 @@ public class RegisterActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private AutoCompleteTextView mUsernameView;
+    private AutoCompleteTextView mIdView;
     private EditText mPasswordView;
     private EditText mConfirmPasswordView;
     private EditText mPhoneView;
-
-    // Firebase instance variables
-    private FirebaseAuth mAuth;
+    private Button mLogInButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        initializeFields();
+    }
 
+    //initialize the field
+    void initializeFields(){
         mEmailView = (AutoCompleteTextView) findViewById(R.id.register_email);
         mPasswordView = (EditText) findViewById(R.id.register_password);
         mConfirmPasswordView = (EditText) findViewById(R.id.register_confirm_password);
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.register_username);
         mPhoneView = findViewById(R.id.register_phone);
+        mIdView = (AutoCompleteTextView) findViewById(R.id.register_id);
+        mLogInButton = (Button) findViewById(R.id.register_sign_up_button);
 
         // Keyboard sign in action
         mConfirmPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -64,10 +74,21 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Get hold of an instance of FirebaseAuth
-        mAuth = FirebaseAuth.getInstance();
-
     }
+
+
+    protected Driver createDriverInstnceFromFields() {
+        Driver driver = new Driver();
+
+        driver.setId(mIdView.getText().toString());
+        driver.setName(mUsernameView.getText().toString());
+        driver.setPhoneNum(mPhoneView.getText().toString());
+        driver.setEmail(mEmailView.getText().toString());
+        driver.setPassword(mPasswordView.getText().toString());
+
+        return  driver;
+    }
+
 
     // Executed when Sign Up button is pressed.
     public void signUp(View v) {
@@ -130,28 +151,39 @@ public class RegisterActivity extends AppCompatActivity {
 
     // TODO: Create a Firebase user
     private void createFirebaseUser(){
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        Driver driver = createDriverInstnceFromFields();
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d("AbuYoYo", "createUser onComplete: " + task.isSuccessful());
-
-                if (!task.isSuccessful())
-                {
-                    Log.d("AbuYoYo", "createUser failed");
-
-                    showErrorDialog("Registration Attempt Failed!");
-                }
-                else {
+        try {
+            mLogInButton.setEnabled(false);
+            Backend dataBase = BackendFactory.getBackend();
+            dataBase.addDriver(driver,new Backend.Action() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(getBaseContext(), "createUser onComplete", Toast.LENGTH_LONG).show();
+                    mLogInButton.setEnabled(true);
                     saveDisplayName();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     finish();
                     startActivity(intent);
                 }
-            }
-        });
+
+                @Override
+                public void onFailure(Exception exception) {
+                    Toast.makeText(getBaseContext(), "createUser failed", Toast.LENGTH_LONG).show();
+                    mLogInButton.setEnabled(true);
+                }
+
+                @Override
+                public void onProgress(String status, double percent) {
+                    if( percent != 100)
+                        mLogInButton.setEnabled(false);
+                }
+            });
+        } catch (Exception e){
+            Toast.makeText(getBaseContext(), "Error \n", Toast.LENGTH_LONG).show();
+            mLogInButton.setEnabled(true);
+        }
+
     }
 
     // TODO: Save the display name to Shared Preferences
@@ -163,15 +195,7 @@ public class RegisterActivity extends AppCompatActivity {
         prefs.edit().putString(DISPLAY_PHONE,displayPhone).apply();
     }
 
-    // TODO: Create an alert dialog to show in case registration failed
-    private void showErrorDialog(String message){
-        new AlertDialog.Builder(this)
-                .setTitle("Oops")
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
+
 
 
 

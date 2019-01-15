@@ -14,6 +14,7 @@
         completions."
     </string>
     <string name="prompt_fullname">Full name</string>
+    <string name="id">Id</string>
     <string name="phone_number">Phone Number</string>
     <string name="prompt_password_again">Confirm Password</string>
     <string name="action_sign_up">Sign up</string>

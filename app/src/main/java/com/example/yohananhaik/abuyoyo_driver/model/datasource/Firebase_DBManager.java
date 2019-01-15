@@ -1,12 +1,20 @@
 package com.example.yohananhaik.abuyoyo_driver.model.datasource;
 
+import android.support.annotation.NonNull;
+
 import com.example.yohananhaik.abuyoyo_driver.model.backend.Backend;
+import com.example.yohananhaik.abuyoyo_driver.model.entities.Driver;
 import com.example.yohananhaik.abuyoyo_driver.model.entities.Trip;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +23,38 @@ public class Firebase_DBManager implements Backend {
 
     static List<Trip> tripList;
     static DatabaseReference tripsRef;
+    static DatabaseReference driverRef;
     static ChildEventListener tripRefChildEventListener;
 
     static {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         tripsRef = database.getReference("Trips");
+        driverRef = database.getReference("Drivers");
         tripList = new ArrayList<>();
+    }
+
+    @Override
+    public void addDriver(Driver driver,final Action action) {
+        Task<Void> task = tripsRef.push().setValue(driver);
+
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                action.onSuccess();
+                action.onProgress("upload driver data", 100);
+
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                action.onFailure(e);
+                action.onProgress("error upload driver data", 100);
+            }
+        });
+
+
     }
 
     public void notifyToTripList(final NotifyDataChange<List<Trip>> notifyDataChange) {
@@ -96,5 +130,30 @@ public class Firebase_DBManager implements Backend {
             tripRefChildEventListener = null;
         }
     }
+
+    @Override
+    public void isValidDriverAuthentication(String emailForCheck,final String passwordForCheck,final Action action) {
+        Query query  = driverRef.orderByChild("emailAdress").equalTo(emailForCheck);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    Driver checkDriver=dataSnapshot.getChildren().iterator().next().getValue(Driver.class);
+                    if(checkDriver.getPassword().equals(passwordForCheck))
+                        action.onSuccess();
+                    else
+                        action.onFailure(new Exception("wrong password"));
+                }
+                else
+                    action.onFailure(new Exception("User does not exist"));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
 }
