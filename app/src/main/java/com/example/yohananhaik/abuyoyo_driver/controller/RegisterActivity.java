@@ -188,10 +188,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     // TODO: Save the display name to Shared Preferences
     private  void saveDisplayName(){
-        String displayName = mUsernameView.getText().toString();
+        String displayEmail = mEmailView.getText().toString();
         String displayPhone = mPhoneView.getText().toString();
         SharedPreferences prefs = getSharedPreferences(ABUD_PREFS,0);
-        prefs.edit().putString(DISPLAY_NAME_KEY, displayName).apply();
+        prefs.edit().putString(DISPLAY_NAME_KEY, displayEmail).apply();
         prefs.edit().putString(DISPLAY_PHONE,displayPhone).apply();
     }
 

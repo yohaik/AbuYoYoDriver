@@ -98,7 +98,7 @@ public class  LoginActivity extends AppCompatActivity {
                             public void onSuccess() {
                                 mLogInButtom.setEnabled(true);
                                 prefs.edit().putString(DISPLAY_NAME_KEY, mEmailView.getText().toString()).apply();
-                                Toast.makeText(getBaseContext(), "ההתחברת בהצלחה", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getBaseContext(), "login success", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                                 finish();
                                 startActivity(intent);

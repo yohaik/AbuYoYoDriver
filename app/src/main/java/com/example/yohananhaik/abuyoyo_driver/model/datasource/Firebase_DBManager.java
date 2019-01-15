@@ -35,7 +35,7 @@ public class Firebase_DBManager implements Backend {
 
     @Override
     public void addDriver(Driver driver,final Action action) {
-        Task<Void> task = tripsRef.push().setValue(driver);
+        Task<Void> task = driverRef.push().setValue(driver);
 
         task.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -133,7 +133,7 @@ public class Firebase_DBManager implements Backend {
 
     @Override
     public void isValidDriverAuthentication(String emailForCheck,final String passwordForCheck,final Action action) {
-        Query query  = driverRef.orderByChild("emailAdress").equalTo(emailForCheck);
+        Query query  = driverRef.orderByChild("email").equalTo(emailForCheck);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
