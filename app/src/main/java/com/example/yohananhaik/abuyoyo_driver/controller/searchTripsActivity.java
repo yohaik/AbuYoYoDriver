@@ -91,7 +91,7 @@ public class searchTripsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Backend dataBase = BackendFactory.getBackend();
-        dataBase.stopNotifyToStudentList();
+        dataBase.stopNotifyToTriptList();
         super.onDestroy();
     }
 

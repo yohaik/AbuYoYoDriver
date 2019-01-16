@@ -33,6 +33,7 @@ public class Firebase_DBManager implements Backend {
         tripList = new ArrayList<>();
     }
 
+    //add or update the database
     @Override
     public void addDriver(Driver driver,final Action action) {
         Task<Void> task = driverRef.push().setValue(driver);
@@ -56,7 +57,9 @@ public class Firebase_DBManager implements Backend {
 
 
     }
+    //public void updateTrip(Trip trip, final Action actuon);
 
+    //get trip list
     public void notifyToTripList(final NotifyDataChange<List<Trip>> notifyDataChange) {
         if (notifyDataChange != null) {
 
@@ -124,13 +127,14 @@ public class Firebase_DBManager implements Backend {
         }
     }
 
-    public void stopNotifyToStudentList() {
+    public void stopNotifyToTriptList() {
         if (tripRefChildEventListener != null) {
             tripsRef.removeEventListener(tripRefChildEventListener);
             tripRefChildEventListener = null;
         }
     }
 
+    //check if driver exsixsit
     @Override
     public void isValidDriverAuthentication(String emailForCheck,final String passwordForCheck,final Action action) {
         Query query  = driverRef.orderByChild("email").equalTo(emailForCheck);

@@ -32,8 +32,9 @@
         <activity android:name=".controller.RegisterActivity" />
         <activity android:name=".controller.fastTripActivity" />
         <activity android:name=".controller.searchTripsActivity" />
-        <activity android:name=".controller.tripHistoryActivity" />
-        <activity android:name=".controller.accountActivity"></activity>
+        <activity android:name=".controller.tripHistoryActivity"
+            android:theme="@style/Theme.AppCompat.Light"/>
+        <activity android:name=".controller.accountActivity" />
     </application>
 
 </manifest>

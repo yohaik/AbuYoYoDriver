@@ -21,9 +21,10 @@ public interface Backend{
     }
 
     void notifyToTripList(final NotifyDataChange<List<Trip>> notifyDataChange);
-    void stopNotifyToStudentList();
+    void stopNotifyToTriptList();
 
     void isValidDriverAuthentication(String emailForCheck, String passwordForCheck, Action action);
 
     void addDriver(Driver driver, final Action action);
+   // void updateTrip(Trip trip, final Action actuon);
 }
