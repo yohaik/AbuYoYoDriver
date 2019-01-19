@@ -10,25 +10,7 @@ public class Trip {
     private String passngerEmail;
     private mTrip tripStatus;
     private String idDriver;
-private  String cityDestination;
 
-    public String getCityDestination() {
-        return cityDestination;
-    }
-
-    public void setCityDestination(String cityDestination) {
-        this.cityDestination = cityDestination;
-    }
-
-    public String getTripDistance() {
-        return tripDistance;
-    }
-
-    public void setTripDistance(String tripDistance) {
-        this.tripDistance = tripDistance;
-    }
-
-    private String tripDistance;
     public String getIdDriver() {
         return idDriver;
     }
