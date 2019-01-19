@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,9 +115,9 @@ public class searchTripsActivity extends AppCompatActivity {
             Trip trip = trips.get(position);
             holder.passengerLocationTextView.setText(trip.getPickUpLoc());
             holder.tripDestinationTextView.setText(trip.getDestinationLoc());
-            holder.textViewTripLength.setText(
-                    findDistance(getTripDestinationAsLocation(trip.getPickUpLoc())
-                            ,getTripDestinationAsLocation(trip.getDestinationLoc())));
+            holder.textViewTripLength.setText(trip.getTripDistance());
+            holder.passengerName.setText(trip.getPassengerName());
+            holder.passengerPhone.setText(trip.getPassengerPhone());
         }
 
         @Override
@@ -128,35 +131,47 @@ public class searchTripsActivity extends AppCompatActivity {
             TextView passengerLocationTextView;
             TextView tripDestinationTextView;
             TextView textViewTripLength;
+            TextView passengerName;
+            TextView passengerPhone;
+            FloatingActionButton takeTrip;
+            FrameLayout expander;
+            boolean isExpanderVisible = false;
+
 
             tripViewHolder(View itemView) {
                 super(itemView);
                 passengerLocationTextView = itemView.findViewById(R.id.passengerLocationTextView);
                 tripDestinationTextView = itemView.findViewById(R.id.destinationTextView);
                 textViewTripLength = itemView.findViewById(R.id.textViewNumDes);
+                passengerName = itemView.findViewById(R.id.passenger_name);
+                passengerPhone = itemView.findViewById(R.id.passenger_phone);
+                takeTrip = itemView.findViewById(R.id.takeTrip);
+                expander = itemView.findViewById(R.id.itemExpanderLayout);
+                expander.setVisibility(View.GONE);
 
-                // itemView.setOnClickListener();
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isExpanderVisible)
+                        {
+                            expander.setVisibility(View.GONE);
+                            isExpanderVisible = false;
+                        }
+                        else {
+                            expander.setVisibility(View.VISIBLE);
+                            isExpanderVisible = true;
+                        }
+                        }
+
+                });
             }
+
+
+
         }
     }
 
-  /*  //metod that fine location by string
-    public Address findLocationByName(String addresStr){
-        if(addresStr == null){
-            return null;
-        }
-        List<Address> address = null;
-        Geocoder coder = new Geocoder(getApplicationContext());
-        try {
-            address = coder.getFromLocationName(addresStr, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (address != null) {
-            return address.get(0);
-        }
-        return null;
-    }*/
+
 
     //find distance between address
     public String findDistance(Location locationA, Location locationB){
