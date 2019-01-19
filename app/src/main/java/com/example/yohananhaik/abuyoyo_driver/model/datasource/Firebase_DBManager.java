@@ -64,7 +64,7 @@ public class Firebase_DBManager implements Backend {
         if (notifyDataChange != null) {
 
             if (tripRefChildEventListener != null) {
-                notifyDataChange.onFailure(new Exception("first unNotify student list"));
+                notifyDataChange.onFailure(new Exception("first unNotify trip list"));
                 return;
             }
             tripList.clear();
