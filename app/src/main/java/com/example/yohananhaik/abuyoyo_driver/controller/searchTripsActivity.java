@@ -9,13 +9,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,13 +36,13 @@ public class searchTripsActivity extends AppCompatActivity {
 
     private RecyclerView tripsRecycleView;
     private List<Trip> trips;
-   // private Location driverLocation;
-   // private Location passengerLocation;
-    // Acquire a reference to the system Location Manager
+   // Acquire a reference to the system Location Manager
     LocationManager locationManager;
     //Define a listener that responds to location updates
     LocationListener locationListener;
     private String dLocation;
+    private boolean expanderVisible = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,9 +116,9 @@ public class searchTripsActivity extends AppCompatActivity {
             Trip trip = trips.get(position);
             holder.passengerLocationTextView.setText(trip.getPickUpLoc());
             holder.tripDestinationTextView.setText(trip.getDestinationLoc());
-            holder.textViewTripLength.setText(
-                    findDistance(getTripDestinationAsLocation(trip.getPickUpLoc())
-                            ,getTripDestinationAsLocation(trip.getDestinationLoc())));
+            holder.textViewTripLength.setText(trip.getTripDistance());
+            holder.passengerPhoneTextView.setText(trip.getPassengerPhone());
+           holder.passengerNameTextView.setText(trip.getPassengerName());
         }
 
         @Override
@@ -128,14 +132,37 @@ public class searchTripsActivity extends AppCompatActivity {
             TextView passengerLocationTextView;
             TextView tripDestinationTextView;
             TextView textViewTripLength;
+            TextView passengerNameTextView;
+            TextView passengerPhoneTextView;
+            FloatingActionButton takeTrip;
+            ConstraintLayout expanderLayout;
 
             tripViewHolder(View itemView) {
                 super(itemView);
                 passengerLocationTextView = itemView.findViewById(R.id.passengerLocationTextView);
                 tripDestinationTextView = itemView.findViewById(R.id.destinationTextView);
                 textViewTripLength = itemView.findViewById(R.id.textViewNumDes);
+                passengerNameTextView = itemView.findViewById(R.id.passengerName);
+                passengerPhoneTextView = itemView.findViewById(R.id.passengerPhone);
+                takeTrip = itemView.findViewById(R.id.takeTripButton);
+                expanderLayout = itemView.findViewById(R.id.expander_item);
 
-                // itemView.setOnClickListener();
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (expanderVisible)
+                        {
+                            expanderLayout.setVisibility(View.GONE);
+                            expanderVisible = false;
+                        }
+                        else
+                        {
+                            Log.d("abu", "cloik false");
+                            expanderLayout.setVisibility(View.VISIBLE);
+                            expanderVisible =true;
+                        }
+                    }
+                });
             }
         }
     }
@@ -159,7 +186,7 @@ public class searchTripsActivity extends AppCompatActivity {
     }*/
 
     //find distance between address
-    public String findDistance(Location locationA, Location locationB){
+  /*  public String findDistance(Location locationA, Location locationB){
         if(locationA == null || locationB == null){
             return "0";
         }
@@ -176,7 +203,7 @@ public class searchTripsActivity extends AppCompatActivity {
         {
             return ""+results[0]  +" meter";
         }
-    }
+    }*/
     //metod fined gps location
     private void getLocation() {
 
@@ -214,7 +241,7 @@ public class searchTripsActivity extends AppCompatActivity {
         return "IOException ...";
     }
 
-    private Location getTripDestinationAsLocation(String addressToConvert)
+ /*   private Location getTripDestinationAsLocation(String addressToConvert)
     {
         Location myLocation = new Location(addressToConvert);
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -234,7 +261,7 @@ public class searchTripsActivity extends AppCompatActivity {
         }
         return myLocation;
     }
-
+*/
 
 
 }
