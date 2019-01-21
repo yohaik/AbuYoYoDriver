@@ -33,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     public static final String ABUD_PREFS = "AbudPrefs";
     public static final String DISPLAY_NAME_KEY = "username";
     public static final String DISPLAY_PHONE = "phone";
+    public static final String DISPLAY_ID = "id";
 
     // TODO: Add member variables here:
     // UI references.
@@ -190,9 +191,11 @@ public class RegisterActivity extends AppCompatActivity {
     private  void saveDisplayName(){
         String displayEmail = mEmailView.getText().toString();
         String displayPhone = mPhoneView.getText().toString();
+        String displyId = mIdView.getText().toString();
         SharedPreferences prefs = getSharedPreferences(ABUD_PREFS,0);
         prefs.edit().putString(DISPLAY_NAME_KEY, displayEmail).apply();
         prefs.edit().putString(DISPLAY_PHONE,displayPhone).apply();
+        prefs.edit().putString(DISPLAY_ID,displyId).apply();
     }
 
 
