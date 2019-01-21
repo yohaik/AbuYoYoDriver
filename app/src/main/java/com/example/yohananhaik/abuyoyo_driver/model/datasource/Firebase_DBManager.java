@@ -75,10 +75,10 @@ public class Firebase_DBManager implements Backend {
                     Trip trip = dataSnapshot.getValue(Trip.class);
                     String id = dataSnapshot.getKey();
                     trip.setId(id);
+
+                    if(notifyDataChange.check(trip) == true){
                     tripList.add(trip);
-
-
-                    notifyDataChange.OnDataChanged(tripList);
+                    notifyDataChange.OnDataChanged(tripList);}
                 }
 
                 @Override

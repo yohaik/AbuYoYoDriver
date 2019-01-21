@@ -11,7 +11,7 @@ public class Trip {
     private mTrip tripStatus;
     private String idDriver;
     private String cityDestination;
-
+    private String id;
     public String getCityDestination() {
         return cityDestination;
     }
@@ -47,7 +47,7 @@ public class Trip {
         this.id = id;
     }
 
-    private String id;
+
 
     public mTrip getTripStatus() { return tripStatus; }
 

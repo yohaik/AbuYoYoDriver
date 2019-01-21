@@ -18,6 +18,8 @@ public interface Backend{
         void OnDataChanged(T obj);
 
         void onFailure(Exception exception);
+
+        boolean check(Trip trip);
     }
 
     void notifyToTripList(final NotifyDataChange<List<Trip>> notifyDataChange);

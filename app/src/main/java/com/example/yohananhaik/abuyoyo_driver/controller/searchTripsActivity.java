@@ -71,6 +71,11 @@ public class searchTripsActivity extends AppCompatActivity {
             public void onFailure(Exception exception) {
                 Toast.makeText(getBaseContext(), "error to get  list\n" + exception.toString(), Toast.LENGTH_LONG).show();
             }
+
+            @Override
+            public boolean check(Trip trip) {
+                return true;
+            }
         });
 
         //gps listener
