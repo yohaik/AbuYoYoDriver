@@ -5,7 +5,7 @@
     android:id="@+id/activity_trip_history"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:background="@drawable/signup">
 
     <RelativeLayout
         android:layout_width="match_parent"

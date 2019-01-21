@@ -28,12 +28,12 @@ public class tripHistoryActivity extends AppCompatActivity {
         dl = (DrawerLayout)findViewById(R.id.activity_trip_history);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close) {
             public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle("Close");
+                getSupportActionBar().setTitle("Driver Trip");
                 // calling onPrepareOptionsMenu() to show action bar icons
                 supportInvalidateOptionsMenu();
             }
             public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle("Open");
+                getSupportActionBar().setTitle("Driver Trip");
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 supportInvalidateOptionsMenu();
             }
@@ -52,13 +52,13 @@ public class tripHistoryActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id)
                 {
-                    case R.id.orders:
+                    case R.id.allTrip:
                         loadFragment(new tripDriverFragment());
                         return true;
-                    case R.id.ended:
-                        //loadFragment(new SecondFragment());
+                    case R.id.tripByCity:
+                        loadFragment(new tripByCityFragment());
                         return true;
-                    case R.id.exit:
+                    case R.id.tripByDistance:
                          finish();
                          System.exit(0);
                     default:
