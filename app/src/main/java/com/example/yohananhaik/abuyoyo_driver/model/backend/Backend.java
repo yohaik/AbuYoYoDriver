@@ -2,10 +2,13 @@ package com.example.yohananhaik.abuyoyo_driver.model.backend;
 
 import com.example.yohananhaik.abuyoyo_driver.model.entities.Driver;
 import com.example.yohananhaik.abuyoyo_driver.model.entities.Trip;
+import com.example.yohananhaik.abuyoyo_driver.model.entities.mTrip;
 
 import java.util.List;
 
 public interface Backend{
+    void updateTrip(Trip currentTrip);
+
     public interface Action{
     void onSuccess();
 
@@ -29,4 +32,8 @@ public interface Backend{
 
     void addDriver(Driver driver, final Action action);
    // void updateTrip(Trip trip, final Action actuon);
+
+    void updateTripStatus(String tripID, String status);
+     Trip getTrip(int position);
+
 }

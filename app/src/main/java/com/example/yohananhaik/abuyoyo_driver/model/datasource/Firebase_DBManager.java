@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.example.yohananhaik.abuyoyo_driver.model.backend.Backend;
 import com.example.yohananhaik.abuyoyo_driver.model.entities.Driver;
 import com.example.yohananhaik.abuyoyo_driver.model.entities.Trip;
+import com.example.yohananhaik.abuyoyo_driver.model.entities.mTrip;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -58,6 +59,21 @@ public class Firebase_DBManager implements Backend {
 
     }
     //public void updateTrip(Trip trip, final Action actuon);
+    @Override
+    public void updateTripStatus(String tripID, String status)
+    {
+        tripsRef.child(tripID).child("tripStatus").setValue(status);
+    }
+
+    public void updateTrip(Trip tip)
+    {
+        tripsRef.child(tip.getId()).setValue(tip);
+    }
+
+    public Trip getTrip(int position)
+    {
+        return tripList.get(position);
+    }
 
     //get trip list
     public void notifyToTripList(final NotifyDataChange<List<Trip>> notifyDataChange) {

@@ -2,6 +2,7 @@ package com.example.yohananhaik.abuyoyo_driver.controller;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,6 +28,7 @@ import com.example.yohananhaik.abuyoyo_driver.R;
 import com.example.yohananhaik.abuyoyo_driver.model.backend.Backend;
 import com.example.yohananhaik.abuyoyo_driver.model.backend.BackendFactory;
 import com.example.yohananhaik.abuyoyo_driver.model.entities.Trip;
+import com.example.yohananhaik.abuyoyo_driver.model.entities.mTrip;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,7 +42,6 @@ public class searchTripsActivity extends AppCompatActivity {
     LocationManager locationManager;
     //Define a listener that responds to location updates
     LocationListener locationListener;
-    private String dLocation;
     private boolean expanderVisible = false;
 
 
@@ -74,7 +75,7 @@ public class searchTripsActivity extends AppCompatActivity {
 
             @Override
             public boolean check(Trip trip) {
-                return true;
+                return trip.getTripStatus()== mTrip.Available;
             }
         });
 
@@ -83,7 +84,6 @@ public class searchTripsActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
           //      driverLocation = location;
-                dLocation = getPlace(location);
             }
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
@@ -113,17 +113,32 @@ public class searchTripsActivity extends AppCompatActivity {
                     false);
 
             return new tripViewHolder(v);
+
+
         }
 
         @Override
-        public void onBindViewHolder(tripViewHolder holder, int position) {
+        public void onBindViewHolder(tripViewHolder holder, final int position) {
 
-            Trip trip = trips.get(position);
+            final Trip trip = trips.get(position);
             holder.passengerLocationTextView.setText(trip.getPickUpLoc());
             holder.tripDestinationTextView.setText(trip.getDestinationLoc());
             holder.textViewTripLength.setText(trip.getTripDistance());
             holder.passengerPhoneTextView.setText(trip.getPassengerPhone());
            holder.passengerNameTextView.setText(trip.getPassengerName());
+
+            holder.takeTrip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Intent intent = new Intent(searchTripsActivity.this, CurrentTripActivity.class);
+                    intent.putExtra("tripPosituin", position);
+                    startActivity(intent);
+                }
+            });
+
+
         }
 
         @Override
@@ -168,27 +183,13 @@ public class searchTripsActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
             }
         }
     }
 
-  /*  //metod that fine location by string
-    public Address findLocationByName(String addresStr){
-        if(addresStr == null){
-            return null;
-        }
-        List<Address> address = null;
-        Geocoder coder = new Geocoder(getApplicationContext());
-        try {
-            address = coder.getFromLocationName(addresStr, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (address != null) {
-            return address.get(0);
-        }
-        return null;
-    }*/
+
 
     //find distance between address
   /*  public String findDistance(Location locationA, Location locationB){

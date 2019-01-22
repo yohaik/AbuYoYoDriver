@@ -39,4 +39,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="passenger_name">Passenger Name</string>
+    <string name="passenger_phone">0541234567</string>
 </resources>
