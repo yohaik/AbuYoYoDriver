@@ -59,8 +59,8 @@ public class tripHistoryActivity extends AppCompatActivity {
                         loadFragment(new tripByCityFragment());
                         return true;
                     case R.id.tripByDistance:
-                         finish();
-                         System.exit(0);
+                        loadFragment(new tripByDistanceFragment());
+                        return true;
                     default:
                         return true;
                 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ import com.example.yohananhaik.abuyoyo_driver.model.entities.Trip;
 import java.util.List;
 
 
-public class tripByCityFragment extends Fragment {
+public class tripByDistanceFragment extends Fragment {
 
     public static final String ABUD_PREFS = "AbudPrefs";
     public static final String DISPLAY_ID = "id";
@@ -31,25 +32,52 @@ public class tripByCityFragment extends Fragment {
     private RecyclerView tripsRecycleView;
     private List<Trip> trips;
     private Button buttonSearch;
-    private TextView cityTextView;
+    private TextView distanceTextView;
+    private SeekBar distanceSeekBar;
     SharedPreferences prefs;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_trip_by_distance, container, false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         //define the recycler view
-        cityTextView = (AutoCompleteTextView) getActivity().findViewById(R.id.cityTextView);
+        distanceTextView = (TextView) getActivity().findViewById(R.id.distanceTextView);
+        distanceSeekBar = (SeekBar) getActivity().findViewById(R.id.distanceSeekBar);
         buttonSearch = (Button) getActivity().findViewById(R.id.buttonSearch);
         tripsRecycleView = getActivity().findViewById(R.id.tripsRecyclerView);
         tripsRecycleView.setHasFixedSize(true);
         tripsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
         prefs = getActivity().getSharedPreferences(ABUD_PREFS,0);
+
+        distanceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                distanceTextView.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                distanceTextView.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                distanceTextView.setText(String.valueOf(seekBar.getProgress()));
+            }
+        });
+
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +89,7 @@ public class tripByCityFragment extends Fragment {
                     public void OnDataChanged(List<Trip> obj) {
                         if (tripsRecycleView.getAdapter() == null) {
                             trips = obj;
-                            tripsRecycleView.setAdapter(new tripByCityFragment.tripsRecycleViewAdapter());
+                            tripsRecycleView.setAdapter(new tripByDistanceFragment.tripsRecycleViewAdapter());
                         } else
                             tripsRecycleView.getAdapter().notifyDataSetChanged();
                     }
@@ -75,7 +103,7 @@ public class tripByCityFragment extends Fragment {
                     @Override
                     public boolean check(Trip trip) {
                         return trip.getIdDriver().equals(prefs.getString(DISPLAY_ID, "")) &&
-                                trip.getCityDestination().equals(cityTextView.getText().toString()) ;
+                                Double.parseDouble(trip.getTripDistance()) < distanceSeekBar.getProgress() ;
                     }
                 });
             }
@@ -83,12 +111,6 @@ public class tripByCityFragment extends Fragment {
         });
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trip_by_city, container, false);
-    }
 
     @Override
     public void onDestroy() {
@@ -97,19 +119,19 @@ public class tripByCityFragment extends Fragment {
         super.onDestroy();
     }
 
-    public class tripsRecycleViewAdapter extends RecyclerView.Adapter<tripByCityFragment.tripsRecycleViewAdapter.tripViewHolder> {
+    public class tripsRecycleViewAdapter extends RecyclerView.Adapter<tripByDistanceFragment.tripsRecycleViewAdapter.tripViewHolder> {
 
         @Override
-        public tripByCityFragment.tripsRecycleViewAdapter.tripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public tripByDistanceFragment.tripsRecycleViewAdapter.tripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(getActivity().getBaseContext()).inflate(R.layout.history_trip_item_view,
                     parent,
                     false);
 
-            return new tripByCityFragment.tripsRecycleViewAdapter.tripViewHolder(v);
+            return new tripByDistanceFragment.tripsRecycleViewAdapter.tripViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(tripByCityFragment.tripsRecycleViewAdapter.tripViewHolder holder, int position) {
+        public void onBindViewHolder(tripByDistanceFragment.tripsRecycleViewAdapter.tripViewHolder holder, int position) {
 
             Trip trip = trips.get(position);
             holder.passengerLocationTextView.setText(trip.getPickUpLoc());

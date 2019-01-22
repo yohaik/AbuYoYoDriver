@@ -42,7 +42,7 @@ public class CurrentTripActivity extends AppCompatActivity {
     Button finishTrip;
     Button callButton;
 
-    SharedPreferences pref;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +56,11 @@ public class CurrentTripActivity extends AppCompatActivity {
             currentTrip = dataBase.getTrip(position);
 
         }
-        SharedPreferences prefs = getSharedPreferences(ABUD_PREFS, 0);
+        prefs = getSharedPreferences(ABUD_PREFS, 0);
 
         // dataBase.updateTripStatus(currentTrip.getId(), "InProgress");
         currentTrip.setTripStatus(mTrip.InProgress);
-        currentTrip.setIdDriver(prefs.getString(DISPLAY_ID, "012345678"));
+        currentTrip.setIdDriver(prefs.getString(DISPLAY_ID, ""));
         //  pref = getSharedPreferences(ABUD_PREFS,0);
 
         dataBase.updateTrip(currentTrip);

@@ -133,7 +133,8 @@ public class searchTripsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-
+                    Backend dataBase = BackendFactory.getBackend();
+                    dataBase.stopNotifyToTriptList();
                     Intent intent = new Intent(searchTripsActivity.this, CurrentTripActivity.class);
                     intent.putExtra("tripPosituin", position);
                     startActivity(intent);

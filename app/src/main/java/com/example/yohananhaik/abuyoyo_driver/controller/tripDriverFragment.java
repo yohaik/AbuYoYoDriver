@@ -1,6 +1,7 @@
 package com.example.yohananhaik.abuyoyo_driver.controller;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -26,8 +27,12 @@ import java.util.List;
 
 public class tripDriverFragment extends Fragment {
 
+    public static final String ABUD_PREFS = "AbudPrefs";
+    public static final String DISPLAY_ID = "id";
+
     private RecyclerView tripsRecycleView;
     private List<Trip> trips;
+    SharedPreferences prefs;
 
 
     @Override
@@ -42,6 +47,7 @@ public class tripDriverFragment extends Fragment {
         tripsRecycleView = getActivity().findViewById(R.id.tripsRecyclerView);
         tripsRecycleView.setHasFixedSize(true);
         tripsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+        prefs = getActivity().getSharedPreferences(ABUD_PREFS,0);
 
         Backend dataBase = BackendFactory.getBackend();
 
@@ -63,7 +69,8 @@ public class tripDriverFragment extends Fragment {
 
             @Override
             public boolean check(Trip trip) {
-                return true;
+                return trip.getIdDriver().equals(prefs.getString(DISPLAY_ID, ""));
+
             }
         });
     }
