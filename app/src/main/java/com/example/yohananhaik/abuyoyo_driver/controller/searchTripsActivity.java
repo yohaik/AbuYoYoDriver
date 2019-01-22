@@ -55,35 +55,12 @@ public class searchTripsActivity extends AppCompatActivity {
         tripsRecycleView.setHasFixedSize(true);
         tripsRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
-        Backend dataBase = BackendFactory.getBackend();
-
-        dataBase.notifyToTripList(new Backend.NotifyDataChange<List<Trip>>() {
-            @Override
-            public void OnDataChanged(List<Trip> obj) {
-                if (tripsRecycleView.getAdapter() == null) {
-                    trips = obj;
-                    tripsRecycleView.setAdapter(new tripsRecycleViewAdapter());
-                } else
-                    tripsRecycleView.getAdapter().notifyDataSetChanged();
-            }
-            //what
-
-            @Override
-            public void onFailure(Exception exception) {
-                Toast.makeText(getBaseContext(), "error to get  list\n" + exception.toString(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public boolean check(Trip trip) {
-                return trip.getTripStatus()== mTrip.Available;
-            }
-        });
+        updateTripList();
 
         //gps listener
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-          //      driverLocation = location;
             }
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
@@ -95,6 +72,31 @@ public class searchTripsActivity extends AppCompatActivity {
             }
         };
         getLocation();
+    }
+
+    private void updateTripList() {
+        Backend dataBase = BackendFactory.getBackend();
+
+        dataBase.notifyToTripList(new Backend.NotifyDataChange<List<Trip>>() {
+            @Override
+            public void OnDataChanged(List<Trip> obj) {
+                if (tripsRecycleView.getAdapter() == null) {
+                    trips = obj;
+                    tripsRecycleView.setAdapter(new tripsRecycleViewAdapter());
+                } else
+                    tripsRecycleView.getAdapter().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                Toast.makeText(getBaseContext(), "error to get  list\n" + exception.toString(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public boolean check(Trip trip) {
+                return trip.getTripStatus()== mTrip.Available;
+            }
+        });
     }
 
     @Override
@@ -189,27 +191,6 @@ public class searchTripsActivity extends AppCompatActivity {
         }
     }
 
-
-
-    //find distance between address
-  /*  public String findDistance(Location locationA, Location locationB){
-        if(locationA == null || locationB == null){
-            return "0";
-        }
-        float[] results = new float[1];
-        Location.distanceBetween(locationA.getLatitude(), locationA.getLongitude(),
-                locationB.getLatitude(),locationB.getLongitude(), results);
-
-        if(results[0]>1000) {
-            float result = results[0] / 1000;
-            String res = String.format("%.2f", result);
-            return res;
-        }
-        else
-        {
-            return ""+results[0]  +" meter";
-        }
-    }*/
     //metod fined gps location
     private void getLocation() {
 
@@ -246,28 +227,6 @@ public class searchTripsActivity extends AppCompatActivity {
         }
         return "IOException ...";
     }
-
- /*   private Location getTripDestinationAsLocation(String addressToConvert)
-    {
-        Location myLocation = new Location(addressToConvert);
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
-        try {
-            List<Address> geoResults = geocoder.getFromLocationName(addressToConvert, 1);
-            while (geoResults.size()==0) {
-                geoResults = geocoder.getFromLocationName(addressToConvert, 1);
-            }
-            if (geoResults.size()>0) {
-                Address addr = geoResults.get(0);
-                myLocation.setLatitude(addr.getLatitude());
-                myLocation.setLongitude(addr.getLongitude());
-            }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-        return myLocation;
-    }
-*/
 
 
 }
