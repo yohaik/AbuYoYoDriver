@@ -38,6 +38,20 @@
             android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".controller.accountActivity" />
         <activity android:name=".controller.CurrentTripActivity"></activity>
+
+        <service
+            android:name=".controller.FirebaseBackgroundService"
+            android:exported="false"
+            >
+
+        </service>
+
+        <receiver android:name="controller.StartFirebaseAtBoot" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
