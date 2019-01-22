@@ -87,6 +87,7 @@ public class CurrentTripActivity extends AppCompatActivity {
 
                                 currentTrip.setTripStatus(mTrip.Available);
                                 currentTrip.setTripStartTime(null);
+                                currentTrip.setIdDriver(null);
                                 dataBase.updateTrip(currentTrip);
 
                                 startActivity(new Intent(CurrentTripActivity.this, MenuActivity.class));
