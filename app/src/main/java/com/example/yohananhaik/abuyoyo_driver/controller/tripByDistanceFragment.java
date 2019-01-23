@@ -102,6 +102,8 @@ public class tripByDistanceFragment extends Fragment {
 
                     @Override
                     public boolean check(Trip trip) {
+                        if(trip.getIdDriver() == null)
+                            return false;
                         return trip.getIdDriver().equals(prefs.getString(DISPLAY_ID, "")) &&
                                 Double.parseDouble(trip.getTripDistance()) < distanceSeekBar.getProgress() ;
                     }

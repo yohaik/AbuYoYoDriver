@@ -74,6 +74,8 @@ public class tripByCityFragment extends Fragment {
 
                     @Override
                     public boolean check(Trip trip) {
+                        if(trip.getIdDriver() == null)
+                            return false;
                         return trip.getIdDriver().equals(prefs.getString(DISPLAY_ID, "")) &&
                                 trip.getCityDestination().equals(cityTextView.getText().toString()) ;
                     }
