@@ -75,6 +75,11 @@ public class Firebase_DBManager implements Backend {
         return tripList.get(position);
     }
 
+    @Override
+    public List<Trip> getAllTrip() {
+        return tripList;
+    }
+
     //get trip list
     public void notifyToTripList(final NotifyDataChange<List<Trip>> notifyDataChange) {
         if (notifyDataChange != null) {

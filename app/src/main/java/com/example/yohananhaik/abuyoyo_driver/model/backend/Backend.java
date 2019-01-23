@@ -35,5 +35,6 @@ public interface Backend{
 
     void updateTripStatus(String tripID, String status);
      Trip getTrip(int position);
+     List<Trip> getAllTrip();
 
 }

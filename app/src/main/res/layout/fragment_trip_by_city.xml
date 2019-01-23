@@ -11,48 +11,24 @@ tools:context=".controller.tripByCityFragment">
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:contentDescription="TODO"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_row" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <Spinner
+        android:id="@+id/spinner3"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="29dp"
+        android:layout_marginTop="13dp"
         app:layout_constraintBottom_toTopOf="@+id/tripsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="city:"
-            android:textSize="24sp" />
-
-        <AutoCompleteTextView
-            android:id="@+id/cityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Write the city here" />
-
-        <Button
-            android:id="@+id/buttonSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="search" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tripsRecyclerView"
@@ -62,6 +38,5 @@ tools:context=".controller.tripByCityFragment">
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

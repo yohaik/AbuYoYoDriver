@@ -34,33 +34,18 @@ tools:context=".controller.tripByDistanceFragment">
         <SeekBar
             android:id="@+id/distanceSeekBar"
             style="@style/Widget.AppCompat.SeekBar"
-            android:layout_width="595dp"
+            android:layout_width="666dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:max="60"
+            android:max="70"
             android:progress="4" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/distanceTextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="58dp"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/buttonSearch"
-                style="@android:style/Widget.DeviceDefault.Light.Button.Small"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:text="search"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/distanceTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
+            android:textSize="24sp" />
 
     </LinearLayout>
 

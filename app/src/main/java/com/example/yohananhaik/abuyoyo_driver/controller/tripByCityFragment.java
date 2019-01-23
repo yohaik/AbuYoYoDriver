@@ -10,8 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import com.example.yohananhaik.abuyoyo_driver.model.backend.Backend;
 import com.example.yohananhaik.abuyoyo_driver.model.backend.BackendFactory;
 import com.example.yohananhaik.abuyoyo_driver.model.entities.Trip;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,8 +35,7 @@ public class tripByCityFragment extends Fragment {
 
     private RecyclerView tripsRecycleView;
     private List<Trip> trips;
-    private Button buttonSearch;
-    private TextView cityTextView;
+    Spinner spinnerSort;
     SharedPreferences prefs;
 
     @Override
@@ -44,16 +48,41 @@ public class tripByCityFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //define the recycler view
-        cityTextView = (AutoCompleteTextView) getActivity().findViewById(R.id.cityTextView);
-        buttonSearch = (Button) getActivity().findViewById(R.id.buttonSearch);
         tripsRecycleView = getActivity().findViewById(R.id.tripsRecyclerView);
         tripsRecycleView.setHasFixedSize(true);
         tripsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
         prefs = getActivity().getSharedPreferences(ABUD_PREFS,0);
+   }
 
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final View view = inflater.inflate(R.layout.fragment_trip_by_city, container, false);
+
+        initializesSpinner(view);
+
+        return view;
+    }
+
+    void initializesSpinner(View view)
+    {
+        List<String> citys = new ArrayList<>();
+
+        Backend dataBase = BackendFactory.getBackend();
+        trips = dataBase.getAllTrip();
+        for (Trip trip:trips) {
+            if(!citys.contains(trip.getCityDestination()))
+                citys.add(trip.getCityDestination());
+        }
+        spinnerSort = (Spinner) view.findViewById(R.id.spinner3);
+        spinnerSort.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, citys));
+        spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final String item = parent.getItemAtPosition(position).toString();
+                Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
                 Backend dataBase = BackendFactory.getBackend();
                 dataBase.stopNotifyToTriptList();
                 dataBase.notifyToTripList(new Backend.NotifyDataChange<List<Trip>>() {
@@ -77,19 +106,16 @@ public class tripByCityFragment extends Fragment {
                         if(trip.getIdDriver() == null)
                             return false;
                         return trip.getIdDriver().equals(prefs.getString(DISPLAY_ID, "")) &&
-                                trip.getCityDestination().equals(cityTextView.getText().toString()) ;
+                                trip.getCityDestination().equals(item) ;
                     }
                 });
             }
 
-        });
-    }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trip_by_city, container, false);
+            }
+        });
     }
 
     @Override
@@ -98,6 +124,8 @@ public class tripByCityFragment extends Fragment {
         dataBase.stopNotifyToTriptList();
         super.onDestroy();
     }
+
+
 
     public class tripsRecycleViewAdapter extends RecyclerView.Adapter<tripByCityFragment.tripsRecycleViewAdapter.tripViewHolder> {
 
