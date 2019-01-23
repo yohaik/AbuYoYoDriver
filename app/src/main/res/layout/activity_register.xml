@@ -22,33 +22,35 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/registerFildeLayout"
+        app:layout_constraintBottom_toTopOf="@+id/back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.386"
         app:srcCompat="@drawable/logo_row" />
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/registerFildeLayout"
+    <LinearLayout
+        android:id="@+id/back"
         android:layout_width="match_parent"
-        android:layout_height="372dp"
-        android:layout_marginBottom="32dp"
+        android:layout_height="392dp"
+        android:layout_marginBottom="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/signup_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/register_sign_up_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/fullNameTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/long_textfield"
             app:layout_constraintBottom_toTopOf="@+id/idTextField"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,44 +62,15 @@
                 android:id="@+id/register_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="@string/prompt_fullname"
                 android:imeOptions="actionNext"
                 android:inputType="textNoSuggestions"
                 android:maxLines="1"
                 android:textColor="@android:color/darker_gray"
                 android:textIsSelectable="false"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/idTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/long_textfield"
-            app:layout_constraintBottom_toTopOf="@+id/phoneNamberTextField"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fullNameTextField">
-
-            <AutoCompleteTextView
-                android:id="@+id/register_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/id"
-                android:imeOptions="actionNext"
-                android:inputType="numberSigned"
-                android:maxLines="1"
-                android:textColor="@android:color/darker_gray"
-                android:textIsSelectable="false"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -105,10 +78,9 @@
             android:id="@+id/phoneNamberTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/long_textfield"
             app:layout_constraintBottom_toTopOf="@+id/emailTextField"
             app:layout_constraintEnd_toEndOf="parent"
@@ -118,14 +90,16 @@
 
             <EditText
                 android:id="@+id/register_phone"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/phone_number"
                 android:inputType="phone"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -134,10 +108,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/long_textfield"
             app:layout_constraintBottom_toTopOf="@+id/passwordTextField"
             app:layout_constraintEnd_toEndOf="parent"
@@ -149,14 +123,15 @@
                 android:id="@+id/register_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="@string/prompt_email"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:textColor="@android:color/darker_gray"
                 android:textIsSelectable="false"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -164,10 +139,10 @@
             android:id="@+id/passwordTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/long_textfield"
             app:layout_constraintBottom_toTopOf="@+id/passwordAginTextField"
             app:layout_constraintEnd_toEndOf="parent"
@@ -178,13 +153,15 @@
             <EditText
                 android:id="@+id/register_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="@string/prompt_password"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
 
@@ -194,9 +171,10 @@
             android:id="@+id/passwordAginTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/long_textfield"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -208,28 +186,58 @@
                 android:id="@+id/register_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="@string/prompt_password_again"
                 android:imeActionLabel="@string/action_sign_up"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/idTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-    </android.support.constraint.ConstraintLayout>
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/long_textfield"
+            app:layout_constraintBottom_toTopOf="@+id/phoneNamberTextField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fullNameTextField">
+
+            <AutoCompleteTextView
+                android:id="@+id/register_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:hint="@string/id"
+                android:imeOptions="actionNext"
+                android:inputType="numberSigned"
+                android:maxLines="1"
+                android:textColor="@android:color/darker_gray"
+                android:textIsSelectable="false"
+                android:textSize="14sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/register_sign_up_button"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="92dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
         android:layout_weight="1"
         android:background="@drawable/long_button"
         android:onClick="signUp"
@@ -238,8 +246,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerFildeLayout" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.yohananhaik.abuyoyo_driver.controller;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.yohananhaik.abuyoyo_driver.controller.LoginActivity.ABUD_PREFS;
+
 public class searchTripsActivity extends AppCompatActivity {
 
     private RecyclerView tripsRecycleView;
@@ -43,6 +47,9 @@ public class searchTripsActivity extends AppCompatActivity {
     //Define a listener that responds to location updates
     LocationListener locationListener;
     private boolean expanderVisible = false;
+    public static final String DISPLAY_NAME_KEY = "username";
+     private String driverName;
+
 
 
     @Override
@@ -132,11 +139,12 @@ public class searchTripsActivity extends AppCompatActivity {
             holder.takeTrip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    sendSMS(trip);
                     Backend dataBase = BackendFactory.getBackend();
                     dataBase.stopNotifyToTriptList();
                     Intent intent = new Intent(searchTripsActivity.this, CurrentTripActivity.class);
                     intent.putExtra("tripPosituin", position);
+                    intent.putExtra("driverID",trip.getIdDriver());
                     startActivity(intent);
                 }
             });
@@ -191,6 +199,15 @@ public class searchTripsActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void sendSMS(Trip trip) {
+        String number = trip.getPassengerPhone();
+        String messageToSend = "I'm on my way!\nYou can call me if needed.";
+
+        SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null,null);
+    }
+
+
 
     //metod fined gps location
     private void getLocation() {

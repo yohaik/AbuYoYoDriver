@@ -29,7 +29,7 @@ import static com.example.yohananhaik.abuyoyo_driver.controller.RegisterActivity
 public class CurrentTripActivity extends AppCompatActivity {
     private static final int REQUEST_PHONE_CALL = 1;
 
-    private String tripID;
+
     private int position;
     Trip currentTrip = new Trip();
     Backend dataBase = BackendFactory.getBackend();
@@ -41,6 +41,7 @@ public class CurrentTripActivity extends AppCompatActivity {
     Button cancelTrip;
     Button finishTrip;
     Button callButton;
+    String driverID;
 
     SharedPreferences prefs;
 
@@ -53,14 +54,15 @@ public class CurrentTripActivity extends AppCompatActivity {
 
         if (extras != null) {
             position = extras.getInt("tripPosituin");
+            driverID = extras.getString("driverID");
             currentTrip = dataBase.getTrip(position);
 
         }
-        prefs = getSharedPreferences(ABUD_PREFS, 0);
+
 
         // dataBase.updateTripStatus(currentTrip.getId(), "InProgress");
         currentTrip.setTripStatus(mTrip.InProgress);
-        currentTrip.setIdDriver(prefs.getString(DISPLAY_ID, ""));
+        currentTrip.setIdDriver(driverID);
         //  pref = getSharedPreferences(ABUD_PREFS,0);
 
         dataBase.updateTrip(currentTrip);

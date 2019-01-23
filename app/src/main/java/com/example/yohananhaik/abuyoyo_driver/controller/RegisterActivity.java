@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     public static final String DISPLAY_NAME_KEY = "username";
     public static final String DISPLAY_PHONE = "phone";
     public static final String DISPLAY_ID = "id";
-
+    public static final String DISPLAY_EMAIL = "email";
     // TODO: Add member variables here:
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -146,11 +146,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         String confirmPassword = mConfirmPasswordView.getText().toString();
 
-        //TODO: Add own logic to check for a valid password (minimum 6 characters)
+
         return confirmPassword.equals(password) && password.length() > 5 && !password.contains(" ");
     }
 
-    // TODO: Create a Firebase user
     private void createFirebaseUser(){
         Driver driver = createDriverInstnceFromFields();
 
@@ -189,13 +188,18 @@ public class RegisterActivity extends AppCompatActivity {
 
     // TODO: Save the display name to Shared Preferences
     private  void saveDisplayName(){
-        String displayEmail = mEmailView.getText().toString();
-        String displayPhone = mPhoneView.getText().toString();
-        String displyId = mIdView.getText().toString();
         SharedPreferences prefs = getSharedPreferences(ABUD_PREFS,0);
-        prefs.edit().putString(DISPLAY_NAME_KEY, displayEmail).apply();
-        prefs.edit().putString(DISPLAY_PHONE,displayPhone).apply();
-        prefs.edit().putString(DISPLAY_ID,displyId).apply();
+
+        String email = mEmailView.getText().toString();
+        String username = mUsernameView.getText().toString();
+        String phone = mPhoneView.getText().toString();
+        String id = mIdView.getText().toString();
+
+        prefs.edit().putString(DISPLAY_EMAIL, email).apply();
+        prefs.edit().putString(DISPLAY_NAME_KEY,username).apply();
+        prefs.edit().putString(DISPLAY_PHONE,phone).apply();
+        prefs.edit().putString(DISPLAY_ID,id).apply();
+
     }
 
 
