@@ -3,6 +3,7 @@ package com.example.yohananhaik.abuyoyo_driver.controller;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -13,17 +14,47 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.yohananhaik.abuyoyo_driver.R;
+import com.example.yohananhaik.abuyoyo_driver.model.backend.Backend;
+import com.example.yohananhaik.abuyoyo_driver.model.backend.BackendFactory;
+import com.example.yohananhaik.abuyoyo_driver.model.entities.Trip;
+
+import java.util.List;
 
 public class tripHistoryActivity extends AppCompatActivity {
+
+    public static final String ABUD_PREFS = "AbudPrefs";
+    public static final String DISPLAY_ID = "id";
 
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_history);
+        prefs = getSharedPreferences(ABUD_PREFS,0);
+        Backend dataBase = BackendFactory.getBackend();
+        dataBase.stopNotifyToTriptList();
+        dataBase.notifyToTripList(new Backend.NotifyDataChange<List<Trip>>() {
+            @Override
+            public void OnDataChanged(List<Trip> obj) {
+
+            }
+            //what
+
+            @Override
+            public void onFailure(Exception exception) {
+            }
+
+            @Override
+            public boolean check(Trip trip) {
+                if(trip.getIdDriver() == null)
+                    return false;
+                return trip.getIdDriver().equals(prefs.getString(DISPLAY_ID, "")) ;
+            }
+        });
 
         dl = (DrawerLayout)findViewById(R.id.activity_trip_history);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close) {

@@ -31,7 +31,6 @@ public class tripByDistanceFragment extends Fragment {
 
     private RecyclerView tripsRecycleView;
     private List<Trip> trips;
-    private Button buttonSearch;
     private TextView distanceTextView;
     private SeekBar distanceSeekBar;
     SharedPreferences prefs;
@@ -55,7 +54,6 @@ public class tripByDistanceFragment extends Fragment {
         //define the recycler view
         distanceTextView = (TextView) getActivity().findViewById(R.id.distanceTextView);
         distanceSeekBar = (SeekBar) getActivity().findViewById(R.id.distanceSeekBar);
-        buttonSearch = (Button) getActivity().findViewById(R.id.buttonSearch);
         tripsRecycleView = getActivity().findViewById(R.id.tripsRecyclerView);
         tripsRecycleView.setHasFixedSize(true);
         tripsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -75,13 +73,6 @@ public class tripByDistanceFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 distanceTextView.setText(String.valueOf(seekBar.getProgress()));
-            }
-        });
-
-
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 Backend dataBase = BackendFactory.getBackend();
                 dataBase.stopNotifyToTriptList();
                 dataBase.notifyToTripList(new Backend.NotifyDataChange<List<Trip>>() {
@@ -109,7 +100,6 @@ public class tripByDistanceFragment extends Fragment {
                     }
                 });
             }
-
         });
     }
 

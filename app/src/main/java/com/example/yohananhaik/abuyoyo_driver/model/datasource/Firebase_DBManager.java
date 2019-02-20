@@ -58,13 +58,13 @@ public class Firebase_DBManager implements Backend {
 
 
     }
+    //public void updateTrip(Trip trip, final Action actuon);
     @Override
     public void updateTripStatus(String tripID, String status)
     {
         tripsRef.child(tripID).child("tripStatus").setValue(status);
     }
 
-    // Updates one of the other attributes
     public void updateTrip(Trip tip)
     {
         tripsRef.child(tip.getId()).setValue(tip);
@@ -75,7 +75,7 @@ public class Firebase_DBManager implements Backend {
         return tripList.get(position);
     }
 
-    //get trip list and update when change is made
+    //get trip list
     public void notifyToTripList(final NotifyDataChange<List<Trip>> notifyDataChange) {
         if (notifyDataChange != null) {
 
@@ -150,7 +150,7 @@ public class Firebase_DBManager implements Backend {
         }
     }
 
-    //check if driver exsit
+    //check if driver exsixsit
     @Override
     public void isValidDriverAuthentication(String emailForCheck,final String passwordForCheck,final Action action) {
         Query query  = driverRef.orderByChild("email").equalTo(emailForCheck);
