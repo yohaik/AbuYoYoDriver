@@ -47,8 +47,6 @@ public class searchTripsActivity extends AppCompatActivity {
     //Define a listener that responds to location updates
     LocationListener locationListener;
     private boolean expanderVisible = false;
-    public static final String DISPLAY_NAME_KEY = "username";
-     private String driverName;
 
 
 
@@ -81,6 +79,7 @@ public class searchTripsActivity extends AppCompatActivity {
         getLocation();
     }
 
+    // Define the listener and update when needed
     private void updateTripList() {
         Backend dataBase = BackendFactory.getBackend();
 
@@ -113,6 +112,7 @@ public class searchTripsActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    // Defin inner class for the view of each trip in the list
     public class tripsRecycleViewAdapter extends RecyclerView.Adapter<tripsRecycleViewAdapter.tripViewHolder> {
 
         @Override

@@ -59,13 +59,13 @@ public class tripByCityFragment extends Fragment {
                 dataBase.notifyToTripList(new Backend.NotifyDataChange<List<Trip>>() {
                     @Override
                     public void OnDataChanged(List<Trip> obj) {
+                        // Sort by the city needed
                         if (tripsRecycleView.getAdapter() == null) {
                             trips = obj;
                             tripsRecycleView.setAdapter(new tripByCityFragment.tripsRecycleViewAdapter());
                         } else
                             tripsRecycleView.getAdapter().notifyDataSetChanged();
                     }
-                    //what
 
                     @Override
                     public void onFailure(Exception exception) {

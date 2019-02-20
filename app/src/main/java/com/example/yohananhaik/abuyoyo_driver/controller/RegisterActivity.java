@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     public static final String DISPLAY_PHONE = "phone";
     public static final String DISPLAY_ID = "id";
     public static final String DISPLAY_EMAIL = "email";
-    // TODO: Add member variables here:
+    // Add member variables here:
     // UI references.
     private AutoCompleteTextView mEmailView;
     private AutoCompleteTextView mUsernameView;
@@ -128,11 +128,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // TODO: Call create FirebaseUser() here
+            // Call create FirebaseUser()
             createFirebaseUser();
         }
     }
@@ -186,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    // TODO: Save the display name to Shared Preferences
+    // Save the display name to Shared Preferences
     private  void saveDisplayName(){
         SharedPreferences prefs = getSharedPreferences(ABUD_PREFS,0);
 

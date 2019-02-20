@@ -43,8 +43,6 @@ public class CurrentTripActivity extends AppCompatActivity {
     Button callButton;
     String driverID;
 
-    SharedPreferences prefs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +56,8 @@ public class CurrentTripActivity extends AppCompatActivity {
             currentTrip = dataBase.getTrip(position);
 
         }
-
-
-        // dataBase.updateTripStatus(currentTrip.getId(), "InProgress");
         currentTrip.setTripStatus(mTrip.InProgress);
         currentTrip.setIdDriver(driverID);
-        //  pref = getSharedPreferences(ABUD_PREFS,0);
-
         dataBase.updateTrip(currentTrip);
 
         setViewFields();
@@ -76,6 +69,7 @@ public class CurrentTripActivity extends AppCompatActivity {
 
     private void setButtons() {
 
+        // Cancel trip option  - updates the database
         cancelTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +100,7 @@ public class CurrentTripActivity extends AppCompatActivity {
             }
         });
 
+        // Update DB when trip is done
         finishTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +132,7 @@ public class CurrentTripActivity extends AppCompatActivity {
 
         });
 
+        // Call the passenger
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -26,7 +26,6 @@ public class FirebaseBackgroundService extends Service  {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference f = database.getReference("Trips");
-    private ValueEventListener handler;
     private ChildEventListener tripRefChildEventListener;
 
     @Override
@@ -38,6 +37,7 @@ public class FirebaseBackgroundService extends Service  {
     public void onCreate() {
         super.onCreate();
 
+        // Define actions when children chnged
         tripRefChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -70,6 +70,7 @@ public class FirebaseBackgroundService extends Service  {
 
     }
 
+    // Activate notification whe needed
     private void postNotif(String notifString) {
 
         int NOTIFICATION_ID = 234;

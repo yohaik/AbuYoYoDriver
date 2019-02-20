@@ -29,7 +29,6 @@ public class  LoginActivity extends AppCompatActivity {
 
 
     public static final String ABUD_PREFS = "AbudPrefs";
-    public static final String DISPLAY_NAME_KEY = "username";
     private FirebaseAuth mAuth;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -46,12 +45,13 @@ public class  LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        diaplaySplashScreen();
+        displaySplashScreen();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Connect the objects for screen
         initializeFields();
 
+        // Ask for all permissions needed
         if(!hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
@@ -69,7 +69,7 @@ public class  LoginActivity extends AppCompatActivity {
             return true;
         }
 
-    private void diaplaySplashScreen() {
+    private void displaySplashScreen() {
         setTheme(R.style.AppTheme);
         try {
             Thread.sleep(3000);
